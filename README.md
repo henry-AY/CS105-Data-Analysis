@@ -13,7 +13,7 @@ To address our specific question (shown in section 2), we first cleaned the data
 ## **2. What would you like to know?**
 What we want to know is how taking coding classes in high school affects the motivation of those majoring in computer science/data science compared to those majoring in computer science/data science who did not take coding classes in high school?
 
-## **3. Explore, present and Analyze your Data**
+## **3. Explore, present, and analyze your Data**
 
 
 ```python
@@ -60,48 +60,9 @@ df[cols_to_process] = df[cols_to_process].replace(response_map).infer_objects(co
 df.to_csv('cleaned_data.csv', index=False)
 ```
 
-    /var/folders/z9/zxh34tfn1vz_0mfhwjgqcyyh0000gn/T/ipykernel_28140/540217859.py:18: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
-      df[cols_to_process] = df[cols_to_process].replace(response_map).infer_objects(copy=False)
-
-
 ### 1.1 Matrix Question Correlation Heatmap
-
-
-```python
-columns_to_drop = [0, 1, 2, 3, 11, 12, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
-
-corr = df.drop(df.columns[columns_to_drop], axis=1)
-
-corr = corr.rename(columns={
-    'Rank the following reasons on why you chose CS (CSBA) or DS as your major or minor? [Interest in technology and problem-solving]': 'Interest in technology and problem-solving',
-    'Answer the following questions regarding CS/DS [I have a clear reason for choosing CS/DS as my major.]': 'Clear reasoning for choosing CS/DS',
-    'Rank the following reasons on why you chose CS (CSBA) or DS as your major or minor? [Fascination with data analysis and decision-making]' : 'Fascination with Data Analysis',
-    'Rank the following reasons on why you chose CS (CSBA) or DS as your major or minor? [Enjoyment of coding, programming, and building applications]' : 'Enjoyment of coding',
-    'Rank the following reasons on why you chose CS (CSBA) or DS as your major or minor? [Strong job prospects and high earning potential]' : 'Strong Job Prospects',
-    'Rank the following reasons on why you chose CS (CSBA) or DS as your major or minor? [Encouragement or advice from family members, mentors, or educators]' : 'Encouragement from Family members, mentors, etc...',
-    'Rank the following reasons on why you chose CS (CSBA) or DS as your major or minor? [Pressure from family members]' : 'Pressure from family',
-    'Rank the following reasons on why you chose CS (CSBA) or DS as your major or minor? [One or more of my family members or friends work in this area]' : 'Friends or family working in the field',
-    'Answer the following questions regarding CS/DS [I feel motivated to expand my CS/DS knowledge and skills beyond UCR’s core curriculum.]' : 'Motivation to expand beyond curriculum',
-    'Answer the following questions regarding CS/DS [I feel satisfied with the CS/DS courses I have taken at UCR]' : 'Satisfied with the CS/DS courses',
-    'Answer the following questions regarding CS/DS [I have considered changing my major to something outside of CS/DS / I have considered no longer pursuing a minor in DS and other CS related majors / I have considered taking no more CS/DS classes in the future]' : 'Considered pursuing a different degree',
-    'Indicate how accurately the following statements about coding apply to you: [The code/programs I produce are exceptional]' : 'The code I produce is exceptional',
-    'Indicate how accurately the following statements about coding apply to you: [I am very comfortable with programming/writing code.]' : 'Comfortable with programming',
-    'Indicate how accurately the following statements about coding apply to you: [I enjoy coding in an academic setting.]' : 'Enjoy coding in an academic setting',
-    'Indicate how accurately the following statements about coding apply to you: [I enjoy coding outside of an academic setting.]' : 'Enjoy coding outside of an academic setting',
-    'Indicate how accurately the following statements about coding apply to you: [I often feel discouraged when coding.]' : 'I often feel discouraged when coding'
-})
-
-plt.figure(figsize=(20, 20))
-sns.heatmap(corr.corr(), annot=True, cmap='magma')
-plt.title("Matrix Question Correlation Heatmap")
-plt.show()
-```
-
-
     
 ![png](images/output_8_0.png)
-    
-
 
 **Analysis:**
 Based on the heatmap, we can conclude that most of the relationships from the matrix questions show either a weak or negative correlation. However, several interesting patterns and insights can still be drawn. 
@@ -116,28 +77,7 @@ Lastly, and most relevant to our research question, Motivation to expand beyond 
 
 #### 1.2 Prior HS Coding Experience in Relation to Motivation and Clarity Heatmap
 
-
-```python
-df['high_motivation'] = df["Answer the following questions regarding CS/DS [I feel motivated to expand my CS/DS knowledge and skills beyond UCR’s core curriculum.]"]
-df['high_reason'] = df["Answer the following questions regarding CS/DS [I have a clear reason for choosing CS/DS as my major.]"]
-
-data = df.groupby("Which of the following computer science programs or courses did you take during high school? Select all that apply.")[['high_motivation', 'high_reason']].mean()
-
-data.columns = ['Motivation', 'Reason Clarity']
-
-plt.figure(figsize=(6, 6))
-sns.heatmap(data, annot=True, cmap="Blues")
-plt.title("Prior HS Coding Experience in Relation to Motivation and Clarity")
-plt.xticks(rotation=90, ha='right')
-plt.ylabel("Prior HS Coding Experience")
-plt.show()
-```
-
-
-    
 ![png](images/output_11_0.png)
-    
-
 
 **Analysis:**
 The following heatmap ("Prior HS Coding Experience in Relation to Motivation and Clarity") can provide insight into how previous high school coding experience influences motivation among CS/DS majors. It maps the average responses (on a scale of 1-5, with 1 being "strongly disagree" and 5 being "strongly agree") for two areas. The first column is motivation to explore programming beyond the core curriculum ("Motivation"), and clarity in choosing CS/DS as a major ("Reason Clarity"). Additionally, each row represents a different combination of possible high school CS experiences. There exists a general trend where students with any existing high school coding experience tend to report higher motivation and clarity compared to the "None of the above" category; however, only marginally. This trend suggests that the exposure in high school, or lack thereof of might have little impact on students' motivation for programming.
@@ -151,40 +91,8 @@ Interestingly, it is important to address the elephant in the room. The motivati
 In general, previous programming experience in high school marginally impacted motivation; however, it had a significantly larger influence on their clarity for picking CS/DS as their major.
 
 ### 2.1 Histograms of Distribution of Matrix Questions
-
-
-```python
-corr.hist(figsize=(30, 30))
-```
-
-
-
-
-    array([[<Axes: title={'center': 'Interest in technology and problem-solving'}>,
-            <Axes: title={'center': 'Fascination with Data Analysis'}>,
-            <Axes: title={'center': 'Enjoyment of coding'}>,
-            <Axes: title={'center': 'Strong Job Prospects'}>],
-           [<Axes: title={'center': 'Encouragement from Family members, mentors, etc...'}>,
-            <Axes: title={'center': 'Pressure from family'}>,
-            <Axes: title={'center': 'Friends or family working in the field'}>,
-            <Axes: title={'center': 'Motivation to expand beyond curriculum'}>],
-           [<Axes: title={'center': 'Satisfied with the CS/DS courses'}>,
-            <Axes: title={'center': 'Clear reasoning for choosing CS/DS'}>,
-            <Axes: title={'center': 'Considered pursuing a different degree'}>,
-            <Axes: title={'center': 'The code I produce is exceptional'}>],
-           [<Axes: title={'center': 'Comfortable with programming'}>,
-            <Axes: title={'center': 'Enjoy coding in an academic setting'}>,
-            <Axes: title={'center': 'Enjoy coding outside of an academic setting'}>,
-            <Axes: title={'center': 'I often feel discouraged when coding'}>]],
-          dtype=object)
-
-
-
-
     
 ![png](images/output_14_1.png)
-    
-
 
 **Analysis**
 
@@ -223,25 +131,6 @@ corr.hist(figsize=(30, 30))
 
 ### 3.1 Individual Bar Graph Representation
 #### 3.2 The table below represents the count of each major by college year
-
-
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-
-df = pd.read_csv("cleaned_data.csv")
-
-# get the year column answers
-year = df.iloc[:, 1]
-# get the major column answers
-major = df.iloc[:, 3]
-
-year_major_counts = pd.crosstab(year, major)
-year_major_counts
-```
-
-
-
 
 <div>
 <style scoped>
@@ -434,44 +323,9 @@ year_major_counts
 <p>5 rows × 24 columns</p>
 </div>
 
-
-
 #### 3.4 Graph of Number of Majors within each College Level
 
-
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# Read data
-df = pd.read_csv("cleaned_data.csv")
-
-# get the year column answers
-year = df.iloc[:, 1]
-# get the major column answers
-major = df.iloc[:, 3]
-
-year_major_counts = pd.crosstab(year, major)
-
-#normalizes the data
-year_major_norm = year_major_counts.div(year_major_counts.sum(axis=1), axis=0)
-
-# Plot the counts side by side
-year_major_norm.plot(kind='bar', figsize=(10, 8))
-
-plt.xlabel("Year in School")
-plt.ylabel("Count")
-plt.title("Comparison of Year vs Major Count")
-plt.legend(title="Major", bbox_to_anchor=(1.05, 1), loc='upper left')
-plt.tight_layout()
-plt.show()
-```
-
-
-    
 ![png](images/output_19_0.png)
-    
-
 
 **Analysis**
 
@@ -480,32 +334,6 @@ plt.show()
 * Most of the grade levels, other than graduate levels, have a diverse range of majors
 
 #### 3.5 The Proportion of College Year and Major out of Total Students
-
-
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# Read data
-df = pd.read_csv("cleaned_data.csv")
-
-# get the year column answers
-year = df.iloc[:, 1]
-# get the major column answers
-major = df.iloc[:, 3]
-
-# Count the number of occurrences of each combination of Year and Major
-year_major_counts = pd.crosstab(year, major)
-
-#normalizes the data
-# Normalize the data based on the total number of students across all years
-total_students = year_major_counts.sum().sum()  # Total number of students across all years
-year_major_norm = year_major_counts.div(total_students)  # Normalize by total number of students
-year_major_norm
-```
-
-
-
 
 <div>
 <style scoped>
@@ -698,46 +526,9 @@ year_major_norm
 <p>5 rows × 24 columns</p>
 </div>
 
-
-
 #### 3.6 Graph of the Proportion of College Year and Major out of Total Students
-
-
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# Read data
-df = pd.read_csv("cleaned_data.csv")
-
-# get the year column answers
-year = df.iloc[:, 1]
-# get the major column answers
-major = df.iloc[:, 3]
-
-# Count the number of occurrences of each combination of Year and Major
-year_major_counts = pd.crosstab(year, major)
-
-#normalizes the data
-# Normalize the data based on the total number of students across all years
-total_students = year_major_counts.sum().sum()  # Total number of students across all years
-year_major_norm = year_major_counts.div(total_students)  # Normalize by total number of students
-
-year_major_norm.plot(kind='bar', figsize=(10, 8))
-
-plt.xlabel("Year in School")
-plt.ylabel("Count")
-plt.title("Comparison of Year vs Major Proportions")
-plt.legend(title="Major", bbox_to_anchor=(1.05, 1), loc='upper left')
-plt.tight_layout()
-plt.show()
-```
-
-
     
 ![png](images/output_24_0.png)
-    
-
 
 **Analysis**
 * Most of the CS majors are freshmen (by a significant proportion)
@@ -753,46 +544,6 @@ In terms of motivation, it shows that various students to some degree are intere
 
 ### 4.1 Ranking domains of Interest - Stacked Bar Graph
 #### 4.2 Students who did not take CS/DS courses in HS
-
-
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# Load Data
-df = pd.read_csv("cleaned_data.csv")
-
-# Filter to include students who did not take any CS/DS course
-df = df[df['Which of the following computer science programs or courses did you take during high school? Select all that apply.'] == 'None of the above']
-
-# Select Domain of Interest Columns
-domain_columns = df.columns[13:25]
-domain_df = df[domain_columns].copy()  # Create new dataframe with only columns of interest
-
-# Create columns for the rankings of Domains of Interest
-# Categorical library: https://pandas.pydata.org/docs/reference/api/pandas.Categorical.html
-for col in domain_columns:
-    domain_df.loc[:, col] = pd.Categorical(domain_df[col], categories=['1st', '2nd', '3rd', 'Not applicable'], ordered=True)
-
-
-# Generate Proportion Pivot Table
-# DataFrame library: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
-proportion_table = pd.DataFrame()
-
-for domain in domain_columns:
-    counts = domain_df[domain].value_counts(normalize=True)
-    proportion_table[domain] = counts
-
-# Creates and renames rows as the Domains of Interest and columns as the rankings
-proportion_table = proportion_table.reindex(['1st', '2nd', '3rd', 'Not applicable'])
-transposed_table = proportion_table.T
-transposed_table.index = ['Software Engineering', 'Web Development', 'Data Science', 'Computer Security and Cryptography', 'Databases', 'Algorithms', 'Game Development', 'Networks', 'Machine Learning, Data Mining, NLP, AI', 'Computer Architecture', 'Embedded Systems', 'Computer Graphics']
-
-transposed_table
-```
-
-
-
 
 <div>
 <style scoped>
@@ -907,26 +658,9 @@ transposed_table
 </table>
 </div>
 
-
-
 #### 4.3 Stacked Bar Graph of Domains of Interest for Students that did not take CS course or Program in HS
 
-
-```python
-#Stacked-Bar Graph
-transposed_table.plot(kind='bar', stacked=True, figsize=(10, 6))
-plt.title('Proportion of Students Ranking Domains of Interest for Students that Did Not take CS course or program in High School')
-plt.xlabel('Domains of Interest')
-plt.ylabel('Proportion')
-plt.legend(title='Rank', loc='upper right')
-plt.show()
-```
-
-
-    
 ![png](images/output_29_0.png)
-    
-
 
 **Analysis:**
 
@@ -937,46 +671,6 @@ For students that did not take CS courses in High School:
 * The field that students had the greatest proportion of students ranking as field not in their top three choices: Computer Architecture (78.57%)
 
 #### 4.4 Students that took any type of CS course or program in High School
-
-
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# Load Data
-df = pd.read_csv("cleaned_data.csv")
-
-# Filter to include students who took any CS/DS course
-none_df = df[df['Which of the following computer science programs or courses did you take during high school? Select all that apply.'] == 'None of the above']
-df = df[~df.index.isin(none_df.index)]
-
-# Select Domain of Interest Columns
-domain_columns = df.columns[13:25]
-domain_df = df[domain_columns].copy()  # Create new dataframe with only columns of interest
-
-# Create columns for the rankings of Domains of Interest
-# Categorical library: https://pandas.pydata.org/docs/reference/api/pandas.Categorical.html
-for col in domain_columns:
-    domain_df.loc[:, col] = pd.Categorical(domain_df[col], categories=['1st', '2nd', '3rd', 'Not applicable'], ordered=True)
-
-# Generate Proportion Pivot Table
-# DataFrame library: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
-proportion_table = pd.DataFrame()
-
-for domain in domain_columns:
-    counts = domain_df[domain].value_counts(normalize=True)
-    proportion_table[domain] = counts
-
-# Creates and renames rows as the Domains of Interest and columns as the rankings
-proportion_table = proportion_table.reindex(['1st', '2nd', '3rd', 'Not applicable'])
-transposed_table = proportion_table.T
-transposed_table.index = ['Software Engineering', 'Web Development', 'Data Science', 'Computer Security and Cryptography', 'Databases', 'Algorithms', 'Game Development', 'Networks', 'Machine Learning, Data Mining, NLP, AI', 'Computer Architecture', 'Embedded Systems', 'Computer Graphics']
-
-transposed_table
-```
-
-
-
 
 <div>
 <style scoped>
@@ -1095,22 +789,7 @@ transposed_table
 
 #### 4.5 Stacked Bar Graph of Domains of Interest for Students that took any type of CS course or Program in HS
 
-
-```python
-#Stacked Bar-Graph
-transposed_table.plot(kind='bar', stacked=True, figsize=(10, 6))
-plt.title('Proportion of Students Ranking Domains of Interest for Students that took any type of CS course or program in High School')
-plt.xlabel('Domains of Interest')
-plt.ylabel('Proportion')
-plt.legend(title='Rank', loc='upper right')
-plt.show()
-```
-
-
-    
 ![png](images/output_34_0.png)
-    
-
 
 **Analysis**
 
@@ -1132,94 +811,17 @@ Additionally, both students who did and did not take CS courses in high school d
 
 ### 5.1 Box Plot
 
-
-```python
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-df = pd.read_csv("cleaned_data.csv")
-
-df['Took_HS_Coding'] = df['Which of the following computer science programs or courses did you take during high school? Select all that apply.'] \
-    .apply(lambda x: 'None of the above' not in str(x))
-
-plt.figure(figsize=(8, 6))
-sns.boxplot(x='Took_HS_Coding', y='Answer the following questions regarding CS/DS [I feel motivated to expand my CS/DS knowledge and skills beyond UCR’s core curriculum.]', data=df)
-plt.xlabel('Took High School Coding Course')
-plt.ylabel('Motivation to Expand CS/DS Knowledge')
-plt.title('Motivation vs. High School Coding Experience')
-plt.show()
-```
-
-
-    
 ![png](images/output_38_0.png)
-    
-
 
 **Analysis:**
 The box plot above compares taking a coding class in high school and overall motivation to expand CS/DS knowledge. We can see that students who took high school courses show a slightly higher median motivation score than those who did not. We can also see that the spreads between the two are about the same, with just some lower outliers for the students who did not take a coding class in high school. We can see that very few students who took coding classes in high school marked their motivation as low. Overall, we can see that there is a slight difference between the two, giving students who have taken coding classes in high school slightly more motivation to expand their knowledge. But in the broad sense, the students want to expand their CS/DS knowledge regardless of whether or not they took a high school coding course or not.
 
-### 6.1 Parrallel Coordinate Graph
+### 6.1 Parallel Coordinate Graph
 
-
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-from pandas.plotting import parallel_coordinates
-
-df = pd.read_csv("cleaned_data.csv")
-
-cols_to_plot = [
-    'Rank the following reasons on why you chose CS (CSBA) or DS as your major or minor? [Interest in technology and problem-solving]',
-    'Rank the following reasons on why you chose CS (CSBA) or DS as your major or minor? [Fascination with data analysis and decision-making]',
-    'Rank the following reasons on why you chose CS (CSBA) or DS as your major or minor? [Enjoyment of coding, programming, and building applications]',
-    'Rank the following reasons on why you chose CS (CSBA) or DS as your major or minor? [Strong job prospects and high earning potential]',
-    'Rank the following reasons on why you chose CS (CSBA) or DS as your major or minor? [Encouragement or advice from family members, mentors, or educators]',
-    'Rank the following reasons on why you chose CS (CSBA) or DS as your major or minor? [Pressure from family members]',
-    'Rank the following reasons on why you chose CS (CSBA) or DS as your major or minor? [One or more of my family members or friends work in this area]',
-]
-
-class_col = "What is your major/minor? (If your major is not listed, please write it in \"Other..\")"
-
-custom_labels = [
-    'Tech Interest',
-    'Data Fascination',
-    'Coding Enjoyment',
-    'Job Prospects',
-    'Family Advice',
-    'Family Pressure',
-    'Friends/Family already in Field'
-]
-
-plt.figure(figsize=(14, 6))
-#Subset of data list of numerical + categorical , self explanatory, self explanatory, self explanatory
-parallel_coordinates(df[cols_to_plot + [class_col]], class_column=class_col, cols=cols_to_plot, colormap="viridis") 
-
-plt.xticks(rotation=45, ha='right', rotation_mode='anchor')
-plt.gca().set_xticklabels(custom_labels)
-plt.gca().invert_yaxis() #Fixes ranking order
-
-plt.legend(
-    title="Major/Minor",
-    bbox_to_anchor=(1.05, 1),
-    loc='upper left',
-    borderaxespad=0.
-)
-
-plt.title("Parallel Coordinates: Reasons for Choosing CS/DS as a major or minor")
-plt.tight_layout()
-plt.show()
-```
-
-
-    
 ![png](images/output_41_0.png)
-    
-
 
 **Analysis:**
-The question when looking for an answer on the motivation the student had towards a ranking system, which ranked a student's reasons for choosing to be a CS or DS minor or major
+The question is when looking for an answer to the motivation the student had towards a ranking system, which ranked a student's reasons for choosing to be a CS or DS minor or major
 
 * One of the most notable things from the graph is the high concentration of Job Prospects has as the number one reason for choosing a major or minor in CS/DS
     * To further support this notion, job prospects have a low concentration for the 1, 2, and 3 rankings
@@ -1233,7 +835,6 @@ $H_1$: There exists a correlation between students who are later in their academ
 
 * ANOVA Test
 
-
 ```python
 df['high_reason'] = df["Answer the following questions regarding CS/DS [I have a clear reason for choosing CS/DS as my major.]"]
 
@@ -1246,12 +847,8 @@ plt.xticks(rotation=90, ha='right')
 plt.ylabel("Academic Year")
 plt.show()
 ```
-
-
-    
+ 
 ![png](images/output_44_0.png)
-    
-
 
 **Heatmap Analysis:** There's a slight upward trend for students later in their academic careers, especially with the graduate group standing out the most. However, the difference between underclassmen and upperclassmen is not strong across the board. Juniors and seniors don’t show much more clarity than freshmen. Therefore, we can not confidently reject $H_o$ without performing a statistical test, which we will do below.
 
@@ -1297,9 +894,6 @@ HScoding_given_majorchange = contingency_table.divide(HS_coding_not, axis = 0)
 HScoding_given_majorchange
 ```
 
-
-
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1342,9 +936,6 @@ HScoding_given_majorchange
 </table>
 </div>
 
-
-
-
 ```python
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -1358,11 +949,7 @@ plt.legend(title='Whether a Student Considered Changing Major or Not', loc='uppe
 plt.show()
 ```
 
-
-    
 ![png](images/output_48_0.png)
-    
-
 
 **Stacked Bar Chart:** 
 Taking a CS course in high school appears to correlate with a reduced likelihood of considering a major change. However, the difference between the two groups is modest, so while it suggests a trend, it may not be strongly conclusive without statistical testing.
@@ -1370,7 +957,6 @@ Taking a CS course in high school appears to correlate with a reduced likelihood
 $H_3$: There is a correlation between students' motivation to expand their knowledge outside of the curriculum and the likelihood of having a higher GPA.
 
 * Spearman Rank Correlation Test
-
 
 ```python
 import seaborn as sns
@@ -1388,11 +974,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-
-    
 ![png](images/output_51_0.png)
-    
-
 
 **Boxplot Analysis:**
 When comparing the different GPA ranges depending on the ranking, it's clear that no matter the GPA of the students, 50 percent of the data is within the 4th or 5th rankings. To determine if there is a correlation, a statistical test will need to be performed.
@@ -1417,9 +999,6 @@ model = ols('clarity ~ year', data=df_anova).fit()
 res = sm.stats.anova_lm(model, typ=2)
 res
 ```
-
-
-
 
 <div>
 <style scoped>
@@ -1463,8 +1042,6 @@ res
   </tbody>
 </table>
 </div>
-
-
 
 **Analysis:**
 The P-value of 0.401715 is greater than our alpha of 0.05, we do not have sufficient evidence to conclude that students in different years have a significantly different response to the clarity question on the survey. In other words, we do not have sufficient evidence to prove that students later in their academic journey have a clearer understanding of why they chose CS/DS as their major.
